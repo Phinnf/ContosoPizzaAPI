@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoPizza.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PizzaController : ControllerBase
     {
@@ -29,6 +29,29 @@ namespace ContosoPizza.Controllers
         {
             PizzaService.Add(pizza);
             return CreatedAtAction(nameof(Get), new { id = pizza.Id }, pizza);
+        }
+        [HttpPut("{id}")]
+        public ActionResult Update(int id, Pizza pizza)
+        {
+            if (id != pizza.Id)
+                return BadRequest();
+
+            var existingPizza = PizzaService.Get(id);
+            if (existingPizza == null)
+                return NotFound();
+
+            PizzaService.Update(pizza);
+
+            return NoContent();
+        }
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var pizza = PizzaService.Get(id);
+            if (pizza is null)
+                return NotFound();
+            PizzaService.Delete(id);
+            return NoContent();
         }
     }
 }

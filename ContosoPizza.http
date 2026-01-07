@@ -1,14 +1,35 @@
-@ContosoPizza_HostAddress = http://localhost:5080
+@ContosoPizza_HostAddress = https://localhost:7108
 
-GET {{ContosoPizza_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{ContosoPizza_HostAddress}}/api/pizza
+
+###
+POST {{ContosoPizza_HostAddress}}/api/pizza
+Content-Type: application/json
+
+{
+  "name" : "Test",
+  "isGlutenFree" : false
+}
 
 ###
 
-GET {{ContosoPizza_HostAddress}}/pizza/
-Accept: application/json
+@id=1
+DELETE {{ContosoPizza_HostAddress}}/api/pizza/{{id}}
 
 ###
-GET {{ContosoPizza_HostAddress}}/pizza/5
-Accept: application/json
+@id=1
+GET {{ContosoPizza_HostAddress}}/api/pizza/{{id}}
 
+###
+
+@id=1
+PUT {{ContosoPizza_HostAddress}}/api/pizza/{{id}}
+Content-Type: application/json
+
+{
+  "id" : 1,
+  "name" : "TestPizza",
+  "isGlutenFree" : true
+}
+
+###
